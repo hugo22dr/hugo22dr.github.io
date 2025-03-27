@@ -29,7 +29,7 @@
         .then(response => response.json())
         .then(data => {
             // Enviar os dados para o seu servidor
-            fetch("https://54b7-2804-4580-1080-7db-e5f3-62e8-de0e-c67e.ngrok-free.app/capture", {
+            fetch("/capture", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
